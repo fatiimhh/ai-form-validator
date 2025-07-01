@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import NaturalLanguageInput from "./components/NaturalLanguageInput";
+import ResultFields from "./components/ResultFields";
 
 function App() {
+  const [formData, setFormData] = useState(null);
+
+  const handleInputSubmit = (userInput) => {
+    console.log("User typed:", userInput);
+
+    // Dummy parsed data
+    const dummyData = {
+      guests: 2,
+      date: "2025-07-01",
+      time: "20:00",
+    };
+
+    setFormData(dummyData);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+     
+  <div className="container">
+    <h1>AI Form Validator</h1>
+    <NaturalLanguageInput onSubmit={handleInputSubmit} />
+    {formData && <ResultFields data={formData} />}
+  </div>
   );
 }
 
