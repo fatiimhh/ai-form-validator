@@ -69,3 +69,20 @@ button:hover {
   font-size: 16px;
 }
 
+/* Clear Button */
+
+.clear-button {
+  margin-top: 20px;
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.clear-button:hover {
+  background-color: #0056b3;
+}
