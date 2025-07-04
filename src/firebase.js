@@ -6,7 +6,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDbJo27UoyqBcrWyyXpQqla3djOqGLKkIM",
+apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "ai-form-validator.firebaseapp.com",
   projectId: "ai-form-validator",
   storageBucket: "ai-form-validator.firebasestorage.app",
