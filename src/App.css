@@ -86,3 +86,29 @@ button:hover {
 .clear-button:hover {
   background-color: #0056b3;
 }
+
+/* Saved results*/
+
+.saved-results-list li {
+  position: relative;
+  margin-bottom: 20px; 
+  padding-right: 40px; 
+}
+
+/* Delete button */
+
+.saved-results-list button.delete-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: background-color 0.2s ease;
+
+}
+

@@ -3,6 +3,10 @@ import "./App.css";
 import axios from "axios";
 import NaturalLanguageInput from "./components/NaturalLanguageInput";
 import ResultFields from "./components/ResultFields";
+import SaveButton from "./components/SaveButton";
+import SavedResults from "./components/SavedResults";
+
+
 
 function App() {
   const [formData, setFormData] = useState(null);
@@ -61,12 +65,17 @@ If any field is missing, return it as null.
     <div className="container">
       <h1>AI Form Validator</h1>
       <NaturalLanguageInput onSubmit={handleInputSubmit} />
+
       {formData && (
-        <>
-          <ResultFields data={formData} onChange={handleFieldChange} />
-          <button className="clear-button" onClick={() => setFormData(null)}>Clear</button>
-        </>
-      )}
+  <>
+    <ResultFields data={formData} onChange={handleFieldChange} />
+    <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+      <button onClick={() => setFormData(null)}>Clear</button>
+      <SaveButton data={formData} />
+    </div>
+  </>
+)}
+<SavedResults />
     </div>
   );
 }
