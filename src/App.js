@@ -5,15 +5,15 @@ import NaturalLanguageInput from "./components/NaturalLanguageInput";
 import ResultFields from "./components/ResultFields";
 import SaveButton from "./components/SaveButton";
 import SavedResults from "./components/SavedResults";
-
-
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   const [formData, setFormData] = useState(null);
+  const [loading, setLoading] = useState(false); // loading state
 
   const handleInputSubmit = async (userInput) => {
     console.log("User typed:", userInput);
-
+    setLoading(true); 
     const prompt = `
 You are a helpful assistant that extracts structured data from user input.
 Given this sentence: "${userInput}"
@@ -42,7 +42,6 @@ If any field is missing, return it as null.
       );
 
       const rawOutput = response.data.generations[0].text.trim();
-
       const jsonStart = rawOutput.indexOf("{");
       const jsonEnd = rawOutput.lastIndexOf("}") + 1;
       const cleanJson = rawOutput.substring(jsonStart, jsonEnd);
@@ -51,6 +50,8 @@ If any field is missing, return it as null.
       setFormData(parsedData);
     } catch (error) {
       console.error("Error from Cohere:", error);
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -66,16 +67,19 @@ If any field is missing, return it as null.
       <h1>AI Form Validator</h1>
       <NaturalLanguageInput onSubmit={handleInputSubmit} />
 
-      {formData && (
-  <>
-    <ResultFields data={formData} onChange={handleFieldChange} />
-    <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-      <button onClick={() => setFormData(null)}>Clear</button>
-      <SaveButton data={formData} />
-    </div>
-  </>
-)}
-<SavedResults />
+      {loading && <LoadingSpinner />} 
+
+      {formData && !loading && (
+        <>
+          <ResultFields data={formData} onChange={handleFieldChange} />
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <button onClick={() => setFormData(null)}>Clear</button>
+            <SaveButton data={formData} />
+          </div>
+        </>
+      )}
+
+      <SavedResults />
     </div>
   );
 }
