@@ -37,6 +37,8 @@ input[type="text"] {
   border-radius: 8px;
 }
 
+/* Submit button */
+
 button {
   background-color: #007bff;
   color: #fff;
@@ -52,6 +54,8 @@ button:hover {
   background-color: #0056b3;
 }
 
+/* Result box */
+
 .result-box {
   margin-top: 1.5rem;
   padding: 1rem;
@@ -64,3 +68,4 @@ button:hover {
   margin-bottom: 8px;
   font-size: 16px;
 }
+
