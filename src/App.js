@@ -6,6 +6,8 @@ import ResultFields from "./components/ResultFields";
 import SaveButton from "./components/SaveButton";
 import SavedResults from "./components/SavedResults";
 import LoadingSpinner from "./components/LoadingSpinner";
+import VoiceInput from "./components/VoiceInput";
+
 
 function App() {
   const [formData, setFormData] = useState(null);
@@ -66,7 +68,7 @@ If any field is missing, return it as null.
     <div className="container">
       <h1>AI Form Validator</h1>
       <NaturalLanguageInput onSubmit={handleInputSubmit} />
-
+      <VoiceInput onVoiceSubmit={handleInputSubmit} />
       {loading && <LoadingSpinner />} 
 
       {formData && !loading && (

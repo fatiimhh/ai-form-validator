@@ -112,3 +112,19 @@ button:hover {
 
 }
 
+/* voice button */
+
+.voice-button {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.voice-button:hover {
+  background-color: #0056b3;
+}
