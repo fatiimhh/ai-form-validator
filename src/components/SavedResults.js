@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
 import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore";
+import DownloadButton from "./DownloadButton";
+
 
 const SavedResults = () => {
   const [savedItems, setSavedItems] = useState([]);
@@ -37,14 +39,12 @@ const SavedResults = () => {
               <strong>Subject:</strong> {item.subject || "N/A"} <br />
               <strong>Date:</strong> {item.date || "N/A"} <br />
               <strong>Time:</strong> {item.time || "N/A"}
-
-                 <button className="delete-btn"
-                onClick={() => handleDelete(item.id)}
-                   >
-                    Delete
-                      </button>
-
-
+              <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
+                <button className="delete-btn" onClick={() => handleDelete(item.id)}>
+                  Delete
+                </button>
+                <DownloadButton data={item} />
+              </div>
               <hr />
             </li>
           ))}
