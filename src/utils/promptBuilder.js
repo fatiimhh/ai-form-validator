@@ -1,6 +1,5 @@
 
 
-
 export const buildPrompt = (userInput) => `
 You are a helpful assistant that extracts structured data from user input.
 Given this sentence: "${userInput}"

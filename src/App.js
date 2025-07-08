@@ -12,12 +12,14 @@ import {
   clearLocalStorage,
 } from "./utils/localStorageUtils";
 import { fetchStructuredData } from "./api/cohereService";
-
+import ErrorDisplay from "./components/ErrorDisplay";
 
 function App() {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  // To load saved data from localStorage on mount
   useEffect(() => {
     const saved = loadFromLocalStorage();
     if (saved) {
@@ -25,21 +27,30 @@ function App() {
     }
   }, []);
 
+  // To save to localStorage on change
   useEffect(() => {
     if (formData) {
       saveToLocalStorage(formData);
     }
   }, [formData]);
 
+  //  To handle input (text or voice)
   const handleInputSubmit = async (userInput) => {
-    console.log("User typed:", userInput);
+    setError("");
+
+    if (!userInput || userInput.trim() === "") {
+      setError("Please enter a sentence to analyze.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       const parsedData = await fetchStructuredData(userInput);
       setFormData(parsedData);
-    } catch (error) {
-      console.error("Error from Cohere:", error);
+    } catch (err) {
+      console.error("Error from Cohere:", err);
+      setError("Could not process your input. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -60,6 +71,9 @@ function App() {
   return (
     <div className="container">
       <h1>AI Form Validator</h1>
+
+      <ErrorDisplay message={error} />
+
       <NaturalLanguageInput onSubmit={handleInputSubmit} />
       <VoiceInput onVoiceSubmit={handleInputSubmit} />
       {loading && <LoadingSpinner />}
