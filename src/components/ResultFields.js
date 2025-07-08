@@ -1,5 +1,5 @@
 import React from "react";
-import "./ResultFields.css";
+import "../styles/ResultFields.css";
 
 
 function ResultFields({ data, onChange }) {

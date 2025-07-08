@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
-import "./UserDropdown.css";
+import "../styles/UserDropdown.css";
 
 const UserDropdown = ({ user, setUser }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
