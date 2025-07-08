@@ -1,7 +1,7 @@
 import React from "react";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase";
-import "./Auth.css"; 
+import "./Auth.css";
 
 const Auth = ({ setUser }) => {
   const handleLogin = async () => {
@@ -16,7 +16,7 @@ const Auth = ({ setUser }) => {
 
   return (
     <div className="auth-container">
-      <h2>Welcome to AI Form Validator </h2>
+      <h2>Welcome to AI Form Validator</h2>
       <p>Please sign in to continue</p>
       <button className="google-btn" onClick={handleLogin}>
         <img

@@ -14,14 +14,15 @@ import {
 } from "./utils/localStorageUtils";
 import { fetchStructuredData } from "./api/cohereService";
 import ErrorDisplay from "./components/ErrorDisplay";
+import UserDropdown from "./components/UserDropdown";
 
 function App() {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null); // to track signed-in user
+  const [user, setUser] = useState(null); // Track signed-in user
 
-  // Load from local storage on mount
+  // Load from localStorage on mount
   useEffect(() => {
     const saved = loadFromLocalStorage();
     if (saved) {
@@ -29,14 +30,13 @@ function App() {
     }
   }, []);
 
-  // Save to local storage on change
+  // Save to localStorage when formData changes
   useEffect(() => {
     if (formData) {
       saveToLocalStorage(formData);
     }
   }, [formData]);
 
-  // Handle user input (text or voice)
   const handleInputSubmit = async (userInput) => {
     setError("");
 
@@ -70,35 +70,34 @@ function App() {
     clearLocalStorage();
   };
 
-  // show Auth component if user not signed in
-  if (!user) {
-    return (
-      <div className="container">
-        <h1>AI Form Validator</h1>
-        <Auth setUser={setUser} />
-      </div>
-    );
-  }
-
   return (
-    <div className="container">
-      <h1>Welcome, {user.displayName}</h1>
-
-      <ErrorDisplay message={error} />
-
-      <NaturalLanguageInput onSubmit={handleInputSubmit} />
-      <VoiceInput onVoiceSubmit={handleInputSubmit} />
-
-      {loading && <LoadingSpinner />}
-
-      {formData && !loading && (
-        <>
-          <ResultFields data={formData} onChange={handleFieldChange} />
-          <ResultActions data={formData} onClear={handleClear} />
-        </>
+    <div>
+      {user && (
+        <div className="user-dropdown-container">
+          <UserDropdown user={user} setUser={setUser} />
+        </div>
       )}
 
-      <SavedResults user={user} />
+      <div className="container">
+        {!user ? (
+          <Auth setUser={setUser} />
+        ) : (
+          <>
+            <h1>Welcome, {user.displayName}</h1>
+            <ErrorDisplay message={error} />
+            <NaturalLanguageInput onSubmit={handleInputSubmit} />
+            <VoiceInput onVoiceSubmit={handleInputSubmit} />
+            {loading && <LoadingSpinner />}
+            {formData && !loading && (
+              <>
+                <ResultFields data={formData} onChange={handleFieldChange} />
+                <ResultActions data={formData} onClear={handleClear} />
+              </>
+            )}
+            <SavedResults user={user} />
+          </>
+        )}
+      </div>
     </div>
   );
 }
