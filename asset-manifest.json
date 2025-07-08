@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/ai-form-validator/static/css/main.0c112d88.css",
+    "main.js": "/ai-form-validator/static/js/main.b150bc00.js",
+    "static/js/239.3f42a5c9.chunk.js": "/ai-form-validator/static/js/239.3f42a5c9.chunk.js",
+    "static/js/977.023c79f4.chunk.js": "/ai-form-validator/static/js/977.023c79f4.chunk.js",
+    "static/js/455.50d10207.chunk.js": "/ai-form-validator/static/js/455.50d10207.chunk.js",
+    "static/js/453.33ee6023.chunk.js": "/ai-form-validator/static/js/453.33ee6023.chunk.js",
+    "index.html": "/ai-form-validator/index.html",
+    "main.0c112d88.css.map": "/ai-form-validator/static/css/main.0c112d88.css.map",
+    "main.b150bc00.js.map": "/ai-form-validator/static/js/main.b150bc00.js.map",
+    "239.3f42a5c9.chunk.js.map": "/ai-form-validator/static/js/239.3f42a5c9.chunk.js.map",
+    "977.023c79f4.chunk.js.map": "/ai-form-validator/static/js/977.023c79f4.chunk.js.map",
+    "455.50d10207.chunk.js.map": "/ai-form-validator/static/js/455.50d10207.chunk.js.map",
+    "453.33ee6023.chunk.js.map": "/ai-form-validator/static/js/453.33ee6023.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0c112d88.css",
+    "static/js/main.b150bc00.js"
+  ]
+}
