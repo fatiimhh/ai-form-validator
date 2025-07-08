@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import Auth from "./components/Auth";
 import NaturalLanguageInput from "./components/NaturalLanguageInput";
 import ResultFields from "./components/ResultFields";
 import SavedResults from "./components/SavedResults";
@@ -18,8 +19,9 @@ function App() {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null); // to track signed-in user
 
-  // To load saved data from localStorage on mount
+  // Load from local storage on mount
   useEffect(() => {
     const saved = loadFromLocalStorage();
     if (saved) {
@@ -27,14 +29,14 @@ function App() {
     }
   }, []);
 
-  // To save to localStorage on change
+  // Save to local storage on change
   useEffect(() => {
     if (formData) {
       saveToLocalStorage(formData);
     }
   }, [formData]);
 
-  //  To handle input (text or voice)
+  // Handle user input (text or voice)
   const handleInputSubmit = async (userInput) => {
     setError("");
 
@@ -68,14 +70,25 @@ function App() {
     clearLocalStorage();
   };
 
+  // show Auth component if user not signed in
+  if (!user) {
+    return (
+      <div className="container">
+        <h1>AI Form Validator</h1>
+        <Auth setUser={setUser} />
+      </div>
+    );
+  }
+
   return (
     <div className="container">
-      <h1>AI Form Validator</h1>
+      <h1>Welcome, {user.displayName}</h1>
 
       <ErrorDisplay message={error} />
 
       <NaturalLanguageInput onSubmit={handleInputSubmit} />
       <VoiceInput onVoiceSubmit={handleInputSubmit} />
+
       {loading && <LoadingSpinner />}
 
       {formData && !loading && (
@@ -85,7 +98,7 @@ function App() {
         </>
       )}
 
-      <SavedResults />
+      <SavedResults user={user} />
     </div>
   );
 }
