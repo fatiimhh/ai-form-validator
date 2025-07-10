@@ -15,6 +15,7 @@ const SavedResults = () => {
   const [editingItemId, setEditingItemId] = useState(null);
   const [editedData, setEditedData] = useState({ subject: "", date: "", time: "" });
 
+  // Real-time listener
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, "results"), (snapshot) => {
       const data = snapshot.docs.map((doc) => ({
@@ -27,6 +28,7 @@ const SavedResults = () => {
     return () => unsubscribe();
   }, []);
 
+  // Delete a result
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "results", id));
@@ -35,21 +37,34 @@ const SavedResults = () => {
     }
   };
 
+  // Start editing
   const startEditing = (item) => {
-    setEditingItemId(item.id);
-    setEditedData({
-      subject: item.subject || "",
-      date: item.date || "",
-      time: item.time || "",
-    });
-  };
+  setEditingItemId(item.id);
+  setEditedData({
+    subject: item.subject || "",
+    date: item.date || "",
+    time: item.time || "",
+    location: item.location || "",
+    priority: item.priority || "",
+    category: item.category || "",
+  });
+};
 
+
+  // Handle field changes in edit mode
   const handleEditChange = (field, value) => {
     setEditedData((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Save the edits
   const saveEdits = async (id) => {
     try {
+      const { subject, date, time } = editedData;
+      if (!subject || !date || !time) {
+        alert("All fields are required.");
+        return;
+      }
+
       await updateDoc(doc(db, "results", id), editedData);
       setEditingItemId(null);
     } catch (error) {
@@ -57,6 +72,7 @@ const SavedResults = () => {
     }
   };
 
+  // Filter results based on search
   const filteredItems = savedItems.filter((item) => {
     const term = searchTerm.toLowerCase();
     return (
@@ -90,35 +106,71 @@ const SavedResults = () => {
       ) : (
         <ul className="saved-results-list">
           {filteredItems.map((item) => (
-            <li key={item.id} style={{ marginBottom: "15px", position: "relative" }}>
+            <li key={item.id} style={{ marginBottom: "20px" }}>
               {editingItemId === item.id ? (
-                <>
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
                   <input
                     type="text"
                     value={editedData.subject}
                     onChange={(e) => handleEditChange("subject", e.target.value)}
+                    placeholder="Subject"
                   />
                   <input
                     type="text"
                     value={editedData.date}
                     onChange={(e) => handleEditChange("date", e.target.value)}
-                    style={{ marginTop: "8px", display: "flex", gap: "10px" }}
+                    placeholder="Date"
                   />
-                  <input 
+                  <input
                     type="text"
                     value={editedData.time}
-                    onChange={(e) => handleEditChange("time", e.target.value)} 
-                    style={{ marginTop: "8px", display: "flex", gap: "10px" }} 
-                  /> 
-                  <div style={{ marginTop: "8px", display: "flex", gap: "10px" }}>
-                  <button onClick={() => saveEdits(item.id)}>Save</button>
-                  <button onClick={() => setEditingItemId(null)} >Cancel</button> </div>
-                </>
+                    onChange={(e) => handleEditChange("time", e.target.value)}
+                    placeholder="Time"
+                  />
+
+                  <input
+                    type="text"
+                    value={editedData.location}
+                    onChange={(e) => handleEditChange("location", e.target.value)}
+                    placeholder="location"
+                  />
+
+                  <input
+                    type="text"
+                    value={editedData.priority}
+                    onChange={(e) => handleEditChange("priority", e.target.value)}
+                    placeholder="priority"
+                  />
+
+                  <input
+                    type="text"
+                    value={editedData.category}
+                    onChange={(e) => handleEditChange("category", e.target.value)}
+                    placeholder="category"
+                  />
+
+
+
+
+
+
+
+
+
+
+                  <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+                    <button onClick={() => saveEdits(item.id)}>Save</button>
+                    <button onClick={() => setEditingItemId(null)}>Cancel</button>
+                  </div>
+                </div>
               ) : (
                 <>
                   <strong>Subject:</strong> {item.subject || "N/A"} <br />
                   <strong>Date:</strong> {item.date || "N/A"} <br />
-                  <strong>Time:</strong> {item.time || "N/A"}
+                  <strong>Time:</strong> {item.time || "N/A"} <br />
+                  <strong>Location:</strong> {item.location || "N/A"} <br />
+                  <strong>Priority:</strong> {item.priority || "N/A"} <br />
+                  <strong>Category:</strong> {item.category || "N/A"} <br />
                   <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
                     <button className="delete-btn" onClick={() => handleDelete(item.id)}>
                       Delete

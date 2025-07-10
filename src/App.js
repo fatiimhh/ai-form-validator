@@ -108,6 +108,7 @@ function App() {
               <>
                 <ResultFields data={formData} onChange={handleFieldChange} />
                 <ResultActions data={formData} onClear={handleClear} />
+
               </>
             )}
             <SavedResults user={user} />
