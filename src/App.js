@@ -15,14 +15,30 @@ import {
 import { fetchStructuredData } from "./api/cohereService";
 import ErrorDisplay from "./components/ErrorDisplay";
 import UserDropdown from "./components/UserDropdown";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
+
+
 
 function App() {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [user, setUser] = useState(null); // Track signed-in user
+  const [user, setUser] = useState(null);
 
-  // Load from localStorage on mount
+  //To  Keep user logged in after refresh
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Load saved formData from localStorage
   useEffect(() => {
     const saved = loadFromLocalStorage();
     if (saved) {
@@ -30,7 +46,7 @@ function App() {
     }
   }, []);
 
-  // Save to localStorage when formData changes
+  // Save formData to localStorage
   useEffect(() => {
     if (formData) {
       saveToLocalStorage(formData);
