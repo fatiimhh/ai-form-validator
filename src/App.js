@@ -46,6 +46,15 @@ function App() {
     }
   }, []);
 
+  // Notifications 
+
+  useEffect(() => {
+  if ("Notification" in window && Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
+}, []);
+
+
   // Save formData to localStorage
   useEffect(() => {
     if (formData) {
