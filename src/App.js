@@ -129,7 +129,7 @@ function App() {
             {/* Toggle Button */}
             <div style={{ marginTop: "20px", marginBottom: "20px" }}>
               <button onClick={() => setShowAnalytics(!showAnalytics)}>
-                {showAnalytics ? "🔙 Back to Saved Results" : "📊 View Analytics"}
+                {showAnalytics ? "Back to Saved Results" : "View Analytics 📊"}
               </button>
             </div>
 
