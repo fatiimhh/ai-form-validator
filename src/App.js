@@ -17,7 +17,7 @@ import ErrorDisplay from "./components/ErrorDisplay";
 import UserDropdown from "./components/UserDropdown";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
-
+import AnalyticsDashboard from "./components/AnalyticsDashboard";
 
 
 function App() {
@@ -25,15 +25,12 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+  const [showAnalytics, setShowAnalytics] = useState(false); 
 
-  //To  Keep user logged in after refresh
+  // Keep user logged in after refresh
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      setUser(user || null);
     });
     return () => unsubscribe();
   }, []);
@@ -41,25 +38,19 @@ function App() {
   // Load saved formData from localStorage
   useEffect(() => {
     const saved = loadFromLocalStorage();
-    if (saved) {
-      setFormData(saved);
+    if (saved) setFormData(saved);
+  }, []);
+
+  // Notifications
+  useEffect(() => {
+    if ("Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
     }
   }, []);
 
-  // Notifications 
-
-  useEffect(() => {
-  if ("Notification" in window && Notification.permission !== "granted") {
-    Notification.requestPermission();
-  }
-}, []);
-
-
   // Save formData to localStorage
   useEffect(() => {
-    if (formData) {
-      saveToLocalStorage(formData);
-    }
+    if (formData) saveToLocalStorage(formData);
   }, [formData]);
 
   const handleInputSubmit = async (userInput) => {
@@ -110,22 +101,44 @@ function App() {
           <>
             <h1>Welcome, {user.displayName}</h1>
             <ErrorDisplay message={error} />
+
             <NaturalLanguageInput onSubmit={handleInputSubmit} />
             <VoiceInput
-             onVoiceSubmit={handleInputSubmit}
-             onClear={handleClear}
-             onSave={() => document.querySelector(".save-button")?.click()}
-             onNavigate={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
-/>
+              onVoiceSubmit={handleInputSubmit}
+              onClear={handleClear}
+              onSave={() =>
+                document.querySelector(".save-button")?.click()
+              }
+              onNavigate={() =>
+                window.scrollTo({
+                  top: document.body.scrollHeight,
+                  behavior: "smooth",
+                })
+              }
+            />
+
             {loading && <LoadingSpinner />}
+
             {formData && !loading && (
               <>
                 <ResultFields data={formData} onChange={handleFieldChange} />
                 <ResultActions data={formData} onClear={handleClear} />
-
               </>
             )}
-            <SavedResults user={user} />
+
+            {/* Toggle Button */}
+            <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+              <button onClick={() => setShowAnalytics(!showAnalytics)}>
+                {showAnalytics ? "🔙 Back to Saved Results" : "📊 View Analytics"}
+              </button>
+            </div>
+
+            {/* Conditional Rendering */}
+            {showAnalytics ? (
+              <AnalyticsDashboard />
+            ) : (
+              <SavedResults user={user} />
+            )}
           </>
         )}
       </div>
