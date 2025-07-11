@@ -31,12 +31,13 @@ const VoiceInput = ({ onVoiceSubmit, onClear, onSave, onNavigate }) => {
         resetTranscript();
         SpeechRecognition.startListening({ continuous: false });
       }}>
-        🎤 Start Voice Input
+         Start Speaking🎤
       </button>
       {listening && <p>Listening...</p>}
-      {transcript && (
+      {transcript && ( 
+        
         <>
-          <p><strong>You said:</strong> {transcript}</p>
+          <p><strong>You said:</strong> {transcript}</p> 
           <button onClick={handleVoiceCommand}>Submit</button>
         </>
       )}
