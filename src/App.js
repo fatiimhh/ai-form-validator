@@ -111,7 +111,12 @@ function App() {
             <h1>Welcome, {user.displayName}</h1>
             <ErrorDisplay message={error} />
             <NaturalLanguageInput onSubmit={handleInputSubmit} />
-            <VoiceInput onVoiceSubmit={handleInputSubmit} />
+            <VoiceInput
+             onVoiceSubmit={handleInputSubmit}
+             onClear={handleClear}
+             onSave={() => document.querySelector(".save-button")?.click()}
+             onNavigate={() => window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })}
+/>
             {loading && <LoadingSpinner />}
             {formData && !loading && (
               <>

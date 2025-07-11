@@ -1,47 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
-const VoiceInput = ({ onVoiceSubmit }) => {
-  const [isListening, setIsListening] = useState(false);
-  const [error, setError] = useState(null);
+const VoiceInput = ({ onVoiceSubmit, onClear, onSave, onNavigate }) => {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
 
-  const handleStart = () => {
-    if (!("webkitSpeechRecognition" in window)) {
-      setError("Speech recognition is not supported in this browser.");
-      return;
+  const handleVoiceCommand = () => {
+    const lower = transcript.toLowerCase();
+
+    if (lower.includes("clear")) {
+      onClear?.(); //  Call clear handler
+    } else if (lower.includes("save")) {
+      onSave?.(); // Call save handler
+    } else if (lower.includes("show") && lower.includes("saved")) {
+      onNavigate?.(); // Call navigation handler
+    } else {
+      onVoiceSubmit(lower); //Sends input for parsing
     }
 
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    setIsListening(true);
-    setError(null);
-
-    recognition.start();
-
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      onVoiceSubmit(transcript); // send it to submit handler
-      setIsListening(false);
-    };
-
-    recognition.onerror = (event) => {
-      setError(`Error: ${event.error}`);
-      setIsListening(false);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
+    resetTranscript();
   };
 
   return (
-    <div style={{ marginTop: "10px" }}>
-      <button onClick={handleStart} className="voice-button">
-         {isListening ? "Listening..." : "Speak"} 🎤
+    <div>
+      <button onClick={() => {
+        resetTranscript();
+        SpeechRecognition.startListening({ continuous: false });
+      }}>
+        🎤 Start Voice Input
       </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {listening && <p>Listening...</p>}
+      {transcript && (
+        <>
+          <p><strong>You said:</strong> {transcript}</p>
+          <button onClick={handleVoiceCommand}>Submit</button>
+        </>
+      )}
     </div>
   );
 };
