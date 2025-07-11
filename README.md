@@ -2,6 +2,7 @@
 
 An intelligent React web application that extracts structured tasks (subject, date, time, location, etc.) from natural language input using AI (Cohere API). It also includes voice input, Firebase authentication, real-time saving, search, analytics, and more.
 
+----------------------------------------------------
 
 🚀 Features
 
@@ -23,6 +24,7 @@ An intelligent React web application that extracts structured tasks (subject, da
 
 🎙️ Voice command control for saving, clearing, and navigating
 
+-------------------------------------------------------------------
 
 🛠️ Tech Stack
 
@@ -36,6 +38,7 @@ react-speech-recognition for voice input
 
 Chart.js for analytics graphs
 
+---------------------------------------------------------------------
 
 🧠 How It Works
 
@@ -52,6 +55,9 @@ Date: Tomorrow
 Time: 2 PM
 
 Users can save, update, or delete tasks and view analytics.
+
+---------------------------------------------------------------------
+
 
 🔗 Live Demo
 https://fatiimhh.github.io/ai-form-validator/
