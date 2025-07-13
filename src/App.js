@@ -18,16 +18,17 @@ import UserDropdown from "./components/UserDropdown";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import AnalyticsDashboard from "./components/AnalyticsDashboard";
-
+import ProjectInfoModal from "./components/ProjectInfoModal";
 
 function App() {
   const [formData, setFormData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
-  const [showAnalytics, setShowAnalytics] = useState(false); 
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
-  // Keep user logged in after refresh
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user || null);
@@ -35,20 +36,17 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // Load saved formData from localStorage
   useEffect(() => {
     const saved = loadFromLocalStorage();
     if (saved) setFormData(saved);
   }, []);
 
-  // Notifications
   useEffect(() => {
     if ("Notification" in window && Notification.permission !== "granted") {
       Notification.requestPermission();
     }
   }, []);
 
-  // Save formData to localStorage
   useEffect(() => {
     if (formData) saveToLocalStorage(formData);
   }, [formData]);
@@ -87,14 +85,14 @@ function App() {
   };
 
   return (
-    <div>
+    <div className={darkMode ? "dark-mode" : ""}>
       {user && (
         <div className="user-dropdown-container">
           <UserDropdown user={user} setUser={setUser} />
         </div>
       )}
 
-      <div className="container">
+      <div className={`container ${darkMode ? "dark" : ""}`}>
         {!user ? (
           <Auth setUser={setUser} />
         ) : (
@@ -102,18 +100,23 @@ function App() {
             <h1>Welcome, {user.displayName}</h1>
             <ErrorDisplay message={error} />
 
+            <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
+              <button onClick={() => setDarkMode(!darkMode)}>
+                {darkMode ? "Light Mode 🌞 " : "Dark Mode 🌙 "}
+              </button>
+              <button onClick={() => setShowModal(true)}>Project Info ℹ️</button>
+              <button onClick={() => setShowAnalytics(!showAnalytics)}>
+                {showAnalytics ? "Back to Saved Results" : "View Analytics 📊"}
+              </button>
+            </div>
+
             <NaturalLanguageInput onSubmit={handleInputSubmit} />
             <VoiceInput
               onVoiceSubmit={handleInputSubmit}
               onClear={handleClear}
-              onSave={() =>
-                document.querySelector(".save-button")?.click()
-              }
+              onSave={() => document.querySelector(".save-button")?.click()}
               onNavigate={() =>
-                window.scrollTo({
-                  top: document.body.scrollHeight,
-                  behavior: "smooth",
-                })
+                window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" })
               }
             />
 
@@ -126,19 +129,13 @@ function App() {
               </>
             )}
 
-            {/* Toggle Button */}
-            <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-              <button onClick={() => setShowAnalytics(!showAnalytics)}>
-                {showAnalytics ? "Back to Saved Results" : "View Analytics 📊"}
-              </button>
-            </div>
-
-            {/* Conditional Rendering */}
             {showAnalytics ? (
               <AnalyticsDashboard />
             ) : (
               <SavedResults user={user} />
             )}
+
+            <ProjectInfoModal isOpen={showModal} onClose={() => setShowModal(false)} />
           </>
         )}
       </div>
