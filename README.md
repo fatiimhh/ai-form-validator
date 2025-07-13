@@ -1,5 +1,5 @@
 # 🌟 AI Form Validator
-![CI](https://github.com/fatiimhh/ai-form-validator/github/workflows/test.yml/badge.svg)
+![CI](https://github.com/fatiimhh/ai-form-validator/.github/workflows/.github/workflows/test.yml/badge.svg)
 
 An intelligent React web app that extracts structured tasks (like subject, date, time, location) from natural language using Cohere AI. Includes voice commands, Firebase authentication, task saving, real-time updates, analytics, and more!
 
