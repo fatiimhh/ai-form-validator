@@ -4,6 +4,7 @@ An intelligent React web app that extracts structured tasks (like subject, date,
 ----------------------------------------------------------------------
 
 🚀 Features
+
 🔐 Google Sign-In (Firebase Authentication)
 
 📄 Natural Language Input → Structured Task Extraction (via Cohere API)
@@ -81,12 +82,12 @@ SavedResults (edit & delete behavior)
 To run tests:
 npm test
 
-----------------------------------------------------------------
 
 # 🌐 Live Demo
-🔗 Click here to try it!
 
------------------------------------------------------------------
+🔗  https://fatiimhh.github.io/ai-form-validator/ 
+
+
 
 # 📄 License
 This project is licensed under the MIT License.
