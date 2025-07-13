@@ -1,52 +1,55 @@
-# AI Form Validator
+# 🌟 AI Form Validator
+An intelligent React web app that extracts structured tasks (like subject, date, time, location) from natural language using Cohere AI. Includes voice commands, Firebase authentication, task saving, real-time updates, analytics, and more!
 
-An intelligent React web application that extracts structured tasks (subject, date, time, location, etc.) from natural language input using AI (Cohere API). It also includes voice input, Firebase authentication, real-time saving, search, analytics, and more.
-
-----------------------------------------------------
+----------------------------------------------------------------------
 
 🚀 Features
+🔐 Google Sign-In (Firebase Authentication)
 
-🔐 Google Sign-In with Firebase Authentication
+📄 Natural Language Input → Structured Task Extraction (via Cohere API)
 
-📄 Natural Language Input → Structured Data Extraction (Cohere API)
+🎙️ Voice Input with commands (e.g., “save”, “clear”, “show saved results”)
 
-🔊 Voice input and commands (save, clear, show saved results)
+💾 Save Tasks to Firestore
 
-💾 Save tasks to Firebase Firestore
+🔍 Real-Time Search, Update & Delete of saved tasks
 
-🔍 Real-time search, update, and delete saved results
+📂 Download as PDF or CSV
 
-📂 Download results as pdf and CSV files
+📈 Analytics Dashboard (e.g. usage stats, most common subjects)
 
-📈 Analytics dashboard (usage stats, most common subjects, etc.)
+🔔 Browser Notifications
 
-🔔 Browser notifications
+🌙 Dark Mode Toggle
 
-🎙️ Voice command control for saving, clearing, and navigating
+🧪 Unit Tests using Jest + React Testing Library
+
+💬 Project Info Modal
+
+-----------------------------------------------------------------------
+
+🛠️ Tech Stack
+React.js
+
+Firebase (Authentication + Firestore)
+
+Cohere API (Natural language understanding)
+
+React Speech Recognition
+
+Chart.js (Data visualization)
+
+Jest + React Testing Library (Unit testing)
 
 -------------------------------------------------------------------
 
-🛠️ Tech Stack
-
-React.js
-
-Firebase (Auth + Firestore)
-
-Cohere API for AI task parsing
-
-react-speech-recognition for voice input
-
-Chart.js for analytics graphs
-
----------------------------------------------------------------------
-
 🧠 How It Works
+User signs in via Google.
 
-Users sign in with Google.
+Enters a sentence like:
+"Meeting with Sarah tomorrow at 2 PM."
 
-They can enter a sentence like "Meeting with Sarah tomorrow at 2pm."
-
-The AI extracts:
+The AI extracts structured info like:
 
 Subject: Meeting with Sarah
 
@@ -54,17 +57,36 @@ Date: Tomorrow
 
 Time: 2 PM
 
-Users can save, update, or delete tasks and view analytics.
+User can:
 
----------------------------------------------------------------------
+Save the result
 
+Edit or delete it
 
-🔗 Live Demo
-https://fatiimhh.github.io/ai-form-validator/
+Search or export it
 
+View analytics on their usage
 
+------------------------------------------------------------------
 
+🧪 Testing
+Includes unit tests for components like:
 
-## 📄 License
+ResultFields
 
-This project is licensed under the [MIT License](LICENSE).
+VoiceInput (e.g. voice command handling)
+
+SavedResults (edit & delete behavior)
+
+To run tests:
+npm test
+
+----------------------------------------------------------------
+
+# 🌐 Live Demo
+🔗 Click here to try it!
+
+-----------------------------------------------------------------
+
+# 📄 License
+This project is licensed under the MIT License.
