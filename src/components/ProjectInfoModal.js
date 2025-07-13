@@ -1,5 +1,7 @@
 import React from "react";
-//import "../styles/ProjectInfoModal.css";
+
+
+
 
 const ProjectInfoModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
