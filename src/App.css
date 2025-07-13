@@ -131,6 +131,21 @@ button:hover {
 
 }
 
+/* Override on mobile */
+
+@media (max-width: 600px) {
+  .saved-results-list button.delete-btn {
+    position: static; 
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .saved-results-list li {
+    padding-right: 0; 
+  }
+}
+
+
 /* voice button */
 
 .voice-button {
